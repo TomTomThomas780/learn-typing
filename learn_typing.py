@@ -101,6 +101,7 @@ class LearnTyping:
 						if int(self.answer)<=self.level_now:
 							self.str=self.generate_level_string(int(self.answer))
 							self.all=list(self.str)[:10]
+							self.start_time=time.time()
 						else:
 							self.screen.fill(self.bg_color)
 							a=button.Button(self,"你输入的数字大于您所在关卡")
@@ -120,9 +121,16 @@ class LearnTyping:
 								self.all=list(self.str)[:10]
 								self.right=[]
 						if self.str=='' and self.answer!='20':
+							self.end_time=time.time()
 							self.game_mode='ready'
 							if int(self.answer)==self.level_now and self.level_now!=20:
 								self.level_now+=1
+							b=button.Button2(self,f'恭喜你！你用了{round(self.end_time-self.start_time)}秒通过了这关。')
+							self.screen.fill(self.bg_color)
+							b.rect.center=self.screen_rect.center
+							b.draw_button()
+							pygame.display.flip()
+							time.sleep(3)
 						if self.str=='' and self.answer=='20':
 							self.str=self.generate_level_string(int(self.answer))
 							self.all=list(self.str)[:10]
