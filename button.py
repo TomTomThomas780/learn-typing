@@ -32,3 +32,8 @@ class Button:
         # Draw blank button and then draw message.
         self._prep_msg(self.msg)
         self.screen.blit(self.msg_image, self.msg_image_rect)
+
+class Button1(Button):
+    def __init__(self,ai_game,msg):
+        super().__init__(ai_game,msg)
+        self.text_color = (0, 255, 0)

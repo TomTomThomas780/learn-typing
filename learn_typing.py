@@ -21,6 +21,7 @@ class LearnTyping:
 		self.start_button=button.Button(self,"开始")
 		self.start_button.rect.center=self.screen_rect.center
 		self.game_mode='ready' #ready,select,play
+		self.right=[]
 		try:
 			with open('data/level.json') as f:
 				self.level_now=int(f.read())
@@ -49,7 +50,7 @@ class LearnTyping:
 			for i in range(1,level):
 				data1.extend(self.level_data[f"level_{i}"]['new_key'])
 			k=""
-			for i in range(10000):
+			for i in range(10):
 				k+=random.choice(data1)
 			return k
 
@@ -99,10 +100,12 @@ class LearnTyping:
 						self.game_mode='play'
 						if int(self.answer)<=self.level_now:
 							self.str=self.generate_level_string(int(self.answer))
+							self.all=list(self.str)[:10]
 						else:
 							self.screen.fill(self.bg_color)
 							a=button.Button(self,"你输入的数字大于您所在关卡")
 							a.rect.center=self.screen_rect.center
+							a.rect.left=self.screen_rect.left
 							a.draw_button()
 							pygame.display.flip()
 							time.sleep(3)
@@ -111,9 +114,18 @@ class LearnTyping:
 					try:
 						if chr(int(str(event.key)))==self.str[0]:
 							self.str=self.str[1:]
-						if self.str=='':
+							self.right.append(chr(int(str(event.key))))
+							self.all.remove(chr(int(str(event.key))))
+							if self.all==[]:
+								self.all=list(self.str)[:10]
+								self.right=[]
+						if self.str=='' and self.answer!='20':
 							self.game_mode='ready'
-							self.level_now+=1
+							if int(self.answer)==self.level_now and self.level_now!=20:
+								self.level_now+=1
+						if self.str=='' and self.answer=='20':
+							self.str=self.generate_level_string(int(self.answer))
+							self.all=list(self.str)[:10]
 					except:
 						pass
 
@@ -126,6 +138,9 @@ class LearnTyping:
 
 	def _check_start_button(self,mouse_pos):
 		if self.start_button.rect.collidepoint(mouse_pos) and self.game_mode=='ready':
+			self.answer=''
+			self.right=[]
+			self.all =[]
 			self.game_mode='select'
 			self.select_button=button.Button(self,f"请输入关卡编号(1~{self.level_now})")
 			self.select_button.rect.center=self.screen_rect.center
@@ -140,10 +155,18 @@ class LearnTyping:
 			self.select_button.msg=f"请输入关卡编号(按F1结束 1~{self.level_now}){self.answer}"
 			self.select_button.draw_button()
 		if self.game_mode=='play':
-			self.playing_button=button.Button(self,'    '.join(list(self.str)))
+			self.playing_button=button.Button1(self,'    '.join(self.right))
 			self.playing_button.rect.center=self.screen_rect.center
 			self.playing_button.rect.left=self.screen_rect.left
 			self.playing_button.draw_button()
+			if self.right:
+				self.playing_button1=button.Button(self,'    '+'    '.join(self.all))
+			else:
+				self.playing_button1=button.Button(self,'    '.join(self.all))
+			self.playing_button1.rect.center=self.screen_rect.center
+			self.playing_button1.rect.left=self.playing_button.msg_image_rect.right
+			self.playing_button1.draw_button()
+
 		pygame.display.flip()
 
 	def run_game(self):
