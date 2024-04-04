@@ -129,6 +129,7 @@ class LearnTyping:
 			self.game_mode='select'
 			self.select_button=button.Button(self,f"请输入关卡编号(1~{self.level_now})")
 			self.select_button.rect.center=self.screen_rect.center
+			self.select_button.rect.left=self.screen_rect.left
 
 	def _update_screen(self):
 		self.screen.fill(self.bg_color)
