@@ -101,6 +101,11 @@ class LearnTyping:
 						if int(self.answer)<=self.level_now:
 							self.str=self.generate_level_string(int(self.answer))
 							self.all=list(self.str)[:10]
+							self.type=self.level_data[f"level_{self.answer}"]['type']
+							if self.level_data[f"level_{self.answer}"]['type'] != 'endless':
+								self.time=self.level_data[f"level_{self.answer}"]['time']
+							else:
+								self.health=self.level_data[f"level_{self.answer}"]['health']
 							self.start_time=time.time()
 						else:
 							self.screen.fill(self.bg_color)
@@ -117,25 +122,58 @@ class LearnTyping:
 							self.str=self.str[1:]
 							self.right.append(chr(int(str(event.key))))
 							self.all.remove(chr(int(str(event.key))))
+							self.typed+=1
 							if self.all==[]:
 								self.all=list(self.str)[:10]
 								self.right=[]
-						if self.str=='' and self.answer!='20':
+						else:
+							if self.type != 'endless':
+								self.plus_time+=1
+							else:
+								self.health-=1
+								if self.health<=0:
+									self.game_mode='ready'
+									self.end_time=time.time()
+									c=button.Button2(self,f'你打了{self.typed}个字,花了{round(self.end_time-self.start_time)}秒。')
+									self.screen.fill(self.bg_color)
+									b.rect.center=self.screen_rect.center
+									b.draw_button()
+									pygame.display.flip()
+									time.sleep(3)
+
+						if self.str=='' and self.type!='endless':
 							self.end_time=time.time()
 							self.game_mode='ready'
 							if int(self.answer)==self.level_now and self.level_now!=20:
 								self.level_now+=1
-							b=button.Button2(self,f'恭喜你！你用了{round(self.end_time-self.start_time)}秒通过了这关。')
+							if round(self.end_time-self.start_time+self.plus_time)<=self.time:
+								b=button.Button2(self,f'恭喜你！你用了{round(self.end_time-self.start_time)}+{self.plus_time}(打错惩罚)秒通过了这关。')
+							else:
+								b=button.Button2(self,f'你用了{round(self.end_time-self.start_time)}+{self.plus_time}(打错惩罚)秒完成了这关,但超过了{self.time}秒。')
 							self.screen.fill(self.bg_color)
 							b.rect.center=self.screen_rect.center
 							b.draw_button()
 							pygame.display.flip()
 							time.sleep(3)
-						if self.str=='' and self.answer=='20':
+						if self.str=='' and self.type=='endless':
 							self.str=self.generate_level_string(int(self.answer))
 							self.all=list(self.str)[:10]
 					except:
-						pass
+						if event.key:
+							if self.type != 'endless':
+								self.plus_time+=1
+							else:
+								self.health-=1
+								if self.health<=0:
+									self.game_mode='ready'
+									self.end_time=time.time()
+									c=button.Button2(self,f'你打了{self.typed}个字,花了{round(self.end_time-self.start_time)}秒。')
+									self.screen.fill(self.bg_color)
+									c.rect.center=self.screen_rect.center
+									c.draw_button()
+									pygame.display.flip()
+									time.sleep(3)
+
 
 
 	def _check_quit_button(self,mouse_pos):
@@ -146,6 +184,10 @@ class LearnTyping:
 
 	def _check_start_button(self,mouse_pos):
 		if self.start_button.rect.collidepoint(mouse_pos) and self.game_mode=='ready':
+			self.typed=0
+			self.type=''
+			self.time=0
+			self.plus_time=0
 			self.answer=''
 			self.right=[]
 			self.all =[]
