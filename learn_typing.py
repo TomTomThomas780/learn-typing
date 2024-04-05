@@ -77,11 +77,9 @@ class LearnTyping:
 		self.button_for_17.rect.topleft=self.button_for_16.rect.topright
 		self.button_for_18.rect.topleft=self.button_for_17.rect.topright
 		self.button_for_19.rect.topleft=self.button_for_18.rect.topright
-		
-
-
-
-
+		self.select_button=button.Button2(self,"请选择关卡")
+		self.select_button.rect.center=self.screen_rect.center
+		self.select_button.rect.bottom=self.button_for_1.rect.top
 		try:
 			with open('data/level.json') as f:
 				self.level_now=int(f.read())
@@ -129,98 +127,121 @@ class LearnTyping:
 			elif event.type==pygame.MOUSEBUTTONDOWN:
 				mouse_pos=pygame.mouse.get_pos()
 				self._check_quit_button(mouse_pos)
-				self._check_start_button(mouse_pos)
 				self._check_go_back_or_SFT_button(mouse_pos)
+				if self.game_mode=='select' and (self.button_for_1.rect.collidepoint(mouse_pos) or self.button_for_2.rect.collidepoint(mouse_pos) or
+					self.button_for_3.rect.collidepoint(mouse_pos) or self.button_for_4.rect.collidepoint(mouse_pos) or
+					self.button_for_5.rect.collidepoint(mouse_pos) or self.button_for_6.rect.collidepoint(mouse_pos) or
+					self.button_for_7.rect.collidepoint(mouse_pos) or self.button_for_8.rect.collidepoint(mouse_pos) or
+					self.button_for_9.rect.collidepoint(mouse_pos) or self.button_for_10.rect.collidepoint(mouse_pos) or
+					self.button_for_11.rect.collidepoint(mouse_pos) or self.button_for_12.rect.collidepoint(mouse_pos) or
+					self.button_for_13.rect.collidepoint(mouse_pos) or self.button_for_14.rect.collidepoint(mouse_pos) or
+					self.button_for_15.rect.collidepoint(mouse_pos) or self.button_for_16.rect.collidepoint(mouse_pos) or
+					self.button_for_17.rect.collidepoint(mouse_pos) or self.button_for_18.rect.collidepoint(mouse_pos) or
+					self.button_for_19.rect.collidepoint(mouse_pos)) :
+					if self.button_for_1.rect.collidepoint(mouse_pos):
+						self.answer='1'
+					elif self.button_for_2.rect.collidepoint(mouse_pos):
+						self.answer='2'
+					elif self.button_for_3.rect.collidepoint(mouse_pos):
+						self.answer='3'
+					elif self.button_for_4.rect.collidepoint(mouse_pos):
+						self.answer='4'
+					elif self.button_for_5.rect.collidepoint(mouse_pos):
+						self.answer='5'
+					elif self.button_for_6.rect.collidepoint(mouse_pos):
+						self.answer='6'
+					elif self.button_for_7.rect.collidepoint(mouse_pos):
+						self.answer='7'
+					elif self.button_for_8.rect.collidepoint(mouse_pos):
+						self.answer='8'
+					elif self.button_for_9.rect.collidepoint(mouse_pos):
+						self.answer='9'
+					elif self.button_for_10.rect.collidepoint(mouse_pos):
+						self.answer='10'
+					elif self.button_for_11.rect.collidepoint(mouse_pos):
+						self.answer='11'
+					elif self.button_for_12.rect.collidepoint(mouse_pos):
+						self.answer='12'
+					elif self.button_for_13.rect.collidepoint(mouse_pos):
+						self.answer='13'
+					elif self.button_for_14.rect.collidepoint(mouse_pos):
+						self.answer='14'
+					elif self.button_for_15.rect.collidepoint(mouse_pos):
+						self.answer='15'
+					elif self.button_for_16.rect.collidepoint(mouse_pos):
+						self.answer='16'
+					elif self.button_for_17.rect.collidepoint(mouse_pos):
+						self.answer='17'
+					elif self.button_for_18.rect.collidepoint(mouse_pos):
+						self.answer='18'
+					elif self.button_for_19.rect.collidepoint(mouse_pos):
+						self.answer='19'
+					if int(self.answer)<=self.level_now:
+						self.str=self.generate_level_string(int(self.answer))
+						self.all=list(self.str)[:10]
+						self.type=self.level_data[f"level_{self.answer}"]['type']
+						stay_in=True
+						while stay_in:
+							for event in pygame.event.get():
+								if event.type==pygame.QUIT:
+									with open('data/level.json','w') as f:
+										f.write(f'{self.level_now}')
+										sys.exit()
+								elif event.type==pygame.MOUSEBUTTONDOWN:
+									mouse_pos=pygame.mouse.get_pos()
+									self._check_quit_button(mouse_pos)
+									self._check_go_back_or_SFT_button(mouse_pos)
+									stay_in=False
+								if event.type==pygame.KEYDOWN:
+									if event.key==pygame.K_ESCAPE:
+										with open('data/level.json','w') as f:
+											f.write(f'{self.level_now}')
+											sys.exit()
+							self.screen.fill(self.bg_color)
+							self.quit_button.draw_button()
+							self.go_back_button.draw_button()
+							sth=self.level_data[f'level_{self.answer}']
+							if self.type=='learn':
+								string_show=f"这关要学习的是{sth['new_key'][0]},{sth['new_key'][1]},分别用{sth['msg'][0][0]}{sth['msg'][0][1]}{sth['msg'][0][2]}和{sth['msg'][1][0]}{sth['msg'][1][1]}{sth['msg'][1][2]}来打。"
+								button_show=button.Button2(self,string_show)
+								button_show.rect.center=self.screen_rect.center
+							else:
+								string_show=f"这关是{sth['msg'][0]}。"
+								button_show=button.Button2(self,string_show)
+								button_show.rect.center=self.screen_rect.center
+							button_show.draw_button()
+							button_tip=button.Button3(self,'(鼠标单击继续)')
+							button_tip.rect.center=self.screen_rect.center
+							button_tip.rect.top=button_show.rect.bottom
+							button_tip.draw_button()
+							self.screen.blit(self.sheet_of_typing,self.rect_of_SFT)
+							pygame.display.flip()
+						if self.level_data[f"level_{self.answer}"]['type'] != 'endless':
+							self.time=self.level_data[f"level_{self.answer}"]['time']
+						else:
+							self.health=self.level_data[f"level_{self.answer}"]['health']
+						self.time_typed=time.time()
+						self.start_time=time.time()
+						self.game_mode='play'
+					else:
+						self.screen.fill(self.bg_color)
+						a=button.Button(self,"你选择的数字大于您所在关卡")
+						a.rect.center=self.screen_rect.center
+						a.rect.left=self.screen_rect.left
+						a.draw_button()
+						pygame.display.flip()
+						time.sleep(3)
+						self.game_mode='select'
+				self._check_start_button(mouse_pos)
+				
+				
 			if event.type==pygame.KEYDOWN:
 				if event.key==pygame.K_ESCAPE:
 					with open('data/level.json','w') as f:
 						f.write(f'{self.level_now}')
 					sys.exit()
-				if self.game_mode=='select':
-					if event.key==pygame.K_0:
-						self.answer=self.answer+'0'
-					elif event.key==pygame.K_BACKSPACE:
-						if self.answer:
-							self.answer=self.answer[:len(self.answer)-1]
-						else:
-							pass
-					elif event.key==pygame.K_1:
-						self.answer=self.answer+'1'
-					elif event.key==pygame.K_2:
-						self.answer=self.answer+'2'
-					elif event.key==pygame.K_3:
-						self.answer=self.answer+'3'
-					elif event.key==pygame.K_4:
-						self.answer=self.answer+'4'
-					elif event.key==pygame.K_5:
-						self.answer=self.answer+'5'
-					elif event.key==pygame.K_6:
-						self.answer=self.answer+'6'
-					elif event.key==pygame.K_7:
-						self.answer=self.answer+'7'
-					elif event.key==pygame.K_8:
-						self.answer=self.answer+'8'
-					elif event.key==pygame.K_9:
-						self.answer=self.answer+'9'
-					elif event.key==pygame.K_F1:
-						self.game_mode='play'
-						if int(self.answer)<=self.level_now:
-							self.str=self.generate_level_string(int(self.answer))
-							self.all=list(self.str)[:10]
-							self.type=self.level_data[f"level_{self.answer}"]['type']
-							stay_in=True
-							while stay_in:
-								for event in pygame.event.get():
-									if event.type==pygame.QUIT:
-										with open('data/level.json','w') as f:
-											f.write(f'{self.level_now}')
-											sys.exit()
-									elif event.type==pygame.MOUSEBUTTONDOWN:
-										mouse_pos=pygame.mouse.get_pos()
-										self._check_quit_button(mouse_pos)
-										self._check_go_back_or_SFT_button(mouse_pos)
-										stay_in=False
-									if event.type==pygame.KEYDOWN:
-										if event.key==pygame.K_ESCAPE:
-											with open('data/level.json','w') as f:
-												f.write(f'{self.level_now}')
-												sys.exit()
-
-								self.screen.fill(self.bg_color)
-								self.quit_button.draw_button()
-								self.go_back_button.draw_button()
-								sth=self.level_data[f'level_{self.answer}']
-								if self.type=='learn':
-									string_show=f"这关要学习的是{sth['new_key'][0]},{sth['new_key'][1]},分别用{sth['msg'][0][0]}{sth['msg'][0][1]}{sth['msg'][0][2]}和{sth['msg'][1][0]}{sth['msg'][1][1]}{sth['msg'][1][2]}来打。"
-									button_show=button.Button2(self,string_show)
-									button_show.rect.center=self.screen_rect.center
-								else:
-									string_show=f"这关是{sth['msg'][0]}。"
-									button_show=button.Button2(self,string_show)
-									button_show.rect.center=self.screen_rect.center
-								button_show.draw_button()
-								button_tip=button.Button3(self,'(鼠标单击继续)')
-								button_tip.rect.center=self.screen_rect.center
-								button_tip.rect.top=button_show.rect.bottom
-								button_tip.draw_button()
-								self.screen.blit(self.sheet_of_typing,self.rect_of_SFT)
-								pygame.display.flip()
-							if self.level_data[f"level_{self.answer}"]['type'] != 'endless':
-								self.time=self.level_data[f"level_{self.answer}"]['time']
-							else:
-								self.health=self.level_data[f"level_{self.answer}"]['health']
-							self.time_typed=time.time()
-							self.start_time=time.time()
-						else:
-							self.screen.fill(self.bg_color)
-							a=button.Button(self,"你输入的数字大于您所在关卡")
-							a.rect.center=self.screen_rect.center
-							a.rect.left=self.screen_rect.left
-							a.draw_button()
-							pygame.display.flip()
-							time.sleep(3)
-							self.game_mode='select'
-				elif self.game_mode=='play':
+						
+				if self.game_mode=='play':
 					if self.type=='endless':
 						self.time_typed=time.time()
 					try:
@@ -308,9 +329,6 @@ class LearnTyping:
 			self.right=[]
 			self.all =[]
 			self.game_mode='select'
-			self.select_button=button.Button(self,f"请输入关卡编号(1~{self.level_now})")
-			self.select_button.rect.center=self.screen_rect.center
-			self.select_button.rect.left=self.screen_rect.left
 
 	def _check_go_back_or_SFT_button(self,mouse_pos):
 		if self.go_back_button.rect.collidepoint(mouse_pos) and self.game_mode!='ready':
@@ -347,7 +365,7 @@ class LearnTyping:
 		if self.game_mode=='ready':
 			self.start_button.draw_button()
 		if self.game_mode=='select':
-			self.select_button.msg=f"请输入关卡编号(按F1结束 1~{self.level_now}){self.answer}"
+			self.select_button.msg=f"请选择关卡，您目前达到了{self.level_now}关"
 			self.select_button.draw_button()
 			self.button_for_1.draw_button()
 			self.button_for_2.draw_button()
