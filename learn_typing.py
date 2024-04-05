@@ -39,6 +39,49 @@ class LearnTyping:
 		self.SFT_button.rect.right=self.screen_rect.right
 		self.music=music.Music()
 		self.music.play()
+		self.button_for_1 = button.Button5(self ,'1')
+		self.button_for_2 = button.Button5(self ,'2')
+		self.button_for_3 = button.Button5(self ,'3')
+		self.button_for_4 = button.Button5(self ,'4')
+		self.button_for_5 = button.Button5(self ,'5')
+		self.button_for_6 = button.Button5(self ,'6')
+		self.button_for_7 = button.Button5(self ,'7')
+		self.button_for_8 = button.Button5(self ,'8')
+		self.button_for_9 = button.Button5(self ,'9')
+		self.button_for_10= button.Button5(self,'10')
+		self.button_for_11= button.Button5(self,'11')
+		self.button_for_12= button.Button5(self,'12')
+		self.button_for_13= button.Button5(self,'13')
+		self.button_for_14= button.Button5(self,'14')
+		self.button_for_15= button.Button5(self,'15')
+		self.button_for_16= button.Button5(self,'16')
+		self.button_for_17= button.Button5(self,'17')
+		self.button_for_18= button.Button5(self,'18')
+		self.button_for_19= button.Button5(self,'19')
+		self.button_for_1.rect.topleft=(150,150)
+		self.button_for_2.rect.topleft=self.button_for_1.rect.topright
+		self.button_for_3.rect.topleft=self.button_for_2.rect.topright
+		self.button_for_4.rect.topleft=self.button_for_3.rect.topright
+		self.button_for_5.rect.topleft=self.button_for_4.rect.topright
+		self.button_for_6.rect.topleft=self.button_for_1.rect.bottomleft
+		self.button_for_7.rect.topleft=self.button_for_6.rect.topright
+		self.button_for_8.rect.topleft=self.button_for_7.rect.topright
+		self.button_for_9.rect.topleft=self.button_for_8.rect.topright
+		self.button_for_10.rect.topleft=self.button_for_9.rect.topright
+		self.button_for_11.rect.topleft=self.button_for_6.rect.bottomleft
+		self.button_for_12.rect.topleft=self.button_for_11.rect.topright
+		self.button_for_13.rect.topleft=self.button_for_12.rect.topright
+		self.button_for_14.rect.topleft=self.button_for_13.rect.topright
+		self.button_for_15.rect.topleft=self.button_for_14.rect.topright
+		self.button_for_16.rect.topleft=self.button_for_11.rect.bottomleft
+		self.button_for_17.rect.topleft=self.button_for_16.rect.topright
+		self.button_for_18.rect.topleft=self.button_for_17.rect.topright
+		self.button_for_19.rect.topleft=self.button_for_18.rect.topright
+		
+
+
+
+
 		try:
 			with open('data/level.json') as f:
 				self.level_now=int(f.read())
@@ -306,6 +349,25 @@ class LearnTyping:
 		if self.game_mode=='select':
 			self.select_button.msg=f"请输入关卡编号(按F1结束 1~{self.level_now}){self.answer}"
 			self.select_button.draw_button()
+			self.button_for_1.draw_button()
+			self.button_for_2.draw_button()
+			self.button_for_3.draw_button()
+			self.button_for_4.draw_button()
+			self.button_for_5.draw_button()
+			self.button_for_6.draw_button()
+			self.button_for_7.draw_button()
+			self.button_for_8.draw_button()
+			self.button_for_9.draw_button()
+			self.button_for_10.draw_button()
+			self.button_for_11.draw_button()
+			self.button_for_12.draw_button()
+			self.button_for_13.draw_button()
+			self.button_for_14.draw_button()
+			self.button_for_15.draw_button()
+			self.button_for_16.draw_button()
+			self.button_for_17.draw_button()
+			self.button_for_18.draw_button()
+			self.button_for_19.draw_button()
 		if self.game_mode=='play':
 			self.playing_button=button.Button1(self,'    '.join(self.right))
 			self.playing_button.rect.center=self.screen_rect.center
