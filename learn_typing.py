@@ -5,6 +5,7 @@ import random
 import time
 from heart import Heart
 from scoreboard import Scoreboard as sb
+import music
 
 class LearnTyping:
 	def __init__(self):
@@ -36,6 +37,8 @@ class LearnTyping:
 		self.SFT_button=button.Button4(self,'指法表')
 		self.SFT_button.rect.top=self.screen_rect.top
 		self.SFT_button.rect.right=self.screen_rect.right
+		self.music=music.Music()
+		self.music.play()
 		try:
 			with open('data/level.json') as f:
 				self.level_now=int(f.read())
@@ -179,6 +182,7 @@ class LearnTyping:
 						self.time_typed=time.time()
 					try:
 						if chr(int(str(event.key)))==self.str[0]:
+							self.music.play_effect(1)
 							self.str=self.str[1:]
 							self.right.append(chr(int(str(event.key))))
 							self.all.remove(chr(int(str(event.key))))
@@ -187,6 +191,7 @@ class LearnTyping:
 								self.all=list(self.str)[:10]
 								self.right=[]
 						else:
+							self.music.play_effect(3)
 							if self.type != 'endless':
 								self.plus_time+=1
 							else:
@@ -199,6 +204,7 @@ class LearnTyping:
 									self.screen.fill(self.bg_color)
 									b.rect.center=self.screen_rect.center
 									b.draw_button()
+									self.music.play_effect(4)
 									pygame.display.flip()
 									time.sleep(3)
 
@@ -209,8 +215,10 @@ class LearnTyping:
 								b=button.Button2(self,f'恭喜你！你用了{round(self.end_time-self.start_time)}+{self.plus_time}(打错惩罚)秒通过了这关。')
 								if int(self.answer)==self.level_now and self.type!='endless':
 									self.level_now+=1
+								self.music.play_effect(2)
 							else:
 								b=button.Button2(self,f'你用了{round(self.end_time-self.start_time)}+{self.plus_time}(打错惩罚)秒完成了这关,但超过了{self.time}秒。')
+								self.music.play_effect(4)
 							self.screen.fill(self.bg_color)
 							b.rect.center=self.screen_rect.center
 							b.draw_button()
@@ -221,6 +229,7 @@ class LearnTyping:
 							self.all=list(self.str)[:10]
 					except:
 						if event.key:
+							self.music.play_effect(3)
 							if self.type != 'endless':
 								self.plus_time+=1
 							else:
@@ -233,6 +242,7 @@ class LearnTyping:
 									self.screen.fill(self.bg_color)
 									c.rect.center=self.screen_rect.center
 									c.draw_button()
+									self.music.play_effect(4)
 									pygame.display.flip()
 									time.sleep(3)
 

@@ -161,3 +161,7 @@ cython_debug/
 
 #added by my self
 level.json
+*.rar
+dist/
+build/
+*.exe
