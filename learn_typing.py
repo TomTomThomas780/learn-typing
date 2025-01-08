@@ -9,7 +9,7 @@ import music
 
 class LearnTyping:
 	def __init__(self):
-		with open("./data/level_data.json",encoding="utf-8") as f:
+		with open("C:/ProgramData/learn_typing/data/level_data.json",encoding="utf-8") as f:
 			file = f.read()
 			self.level_data = eval(file)
 		pygame.init()
@@ -27,7 +27,7 @@ class LearnTyping:
 		self.right=[]
 		self.health=5
 		self.board=sb(self)
-		self.sheet_of_typing=pygame.image.load("images/sheet_of_typing.bmp")
+		self.sheet_of_typing=pygame.image.load("C:/ProgramData/learn_typing/images/sheet_of_typing.bmp")
 		self.rect_of_SFT=self.sheet_of_typing.get_rect()
 		self.rect_of_SFT.center=self.screen_rect.center
 		self.rect_of_SFT.top=self.screen_rect.top
@@ -58,7 +58,7 @@ class LearnTyping:
 		self.button_for_17= button.Button5(self,'17')
 		self.button_for_18= button.Button5(self,'18')
 		self.button_for_19= button.Button5(self,'19')
-		self.button_for_1.rect.topleft=(150,150)
+		self.button_for_1.rect.topleft=(0,150)
 		self.button_for_2.rect.topleft=self.button_for_1.rect.topright
 		self.button_for_3.rect.topleft=self.button_for_2.rect.topright
 		self.button_for_4.rect.topleft=self.button_for_3.rect.topright
@@ -77,14 +77,53 @@ class LearnTyping:
 		self.button_for_17.rect.topleft=self.button_for_16.rect.topright
 		self.button_for_18.rect.topleft=self.button_for_17.rect.topright
 		self.button_for_19.rect.topleft=self.button_for_18.rect.topright
+		self.button_for_locked_1 = button.Button6(self ,'1')
+		self.button_for_locked_2 = button.Button6(self ,'2')
+		self.button_for_locked_3 = button.Button6(self ,'3')
+		self.button_for_locked_4 = button.Button6(self ,'4')
+		self.button_for_locked_5 = button.Button6(self ,'5')
+		self.button_for_locked_6 = button.Button6(self ,'6')
+		self.button_for_locked_7 = button.Button6(self ,'7')
+		self.button_for_locked_8 = button.Button6(self ,'8')
+		self.button_for_locked_9 = button.Button6(self ,'9')
+		self.button_for_locked_10= button.Button6(self,'10')
+		self.button_for_locked_11= button.Button6(self,'11')
+		self.button_for_locked_12= button.Button6(self,'12')
+		self.button_for_locked_13= button.Button6(self,'13')
+		self.button_for_locked_14= button.Button6(self,'14')
+		self.button_for_locked_15= button.Button6(self,'15')
+		self.button_for_locked_16= button.Button6(self,'16')
+		self.button_for_locked_17= button.Button6(self,'17')
+		self.button_for_locked_18= button.Button6(self,'18')
+		self.button_for_locked_19= button.Button6(self,'19')
+		self.button_for_locked_1.rect.topleft=(0,150)
+		self.button_for_locked_2.rect.topleft=self.button_for_locked_1.rect.topright
+		self.button_for_locked_3.rect.topleft=self.button_for_locked_2.rect.topright
+		self.button_for_locked_4.rect.topleft=self.button_for_locked_3.rect.topright
+		self.button_for_locked_5.rect.topleft=self.button_for_locked_4.rect.topright
+		self.button_for_locked_6.rect.topleft=self.button_for_locked_1.rect.bottomleft
+		self.button_for_locked_7.rect.topleft=self.button_for_locked_6.rect.topright
+		self.button_for_locked_8.rect.topleft=self.button_for_locked_7.rect.topright
+		self.button_for_locked_9.rect.topleft=self.button_for_locked_8.rect.topright
+		self.button_for_locked_10.rect.topleft=self.button_for_locked_9.rect.topright
+		self.button_for_locked_11.rect.topleft=self.button_for_locked_6.rect.bottomleft
+		self.button_for_locked_12.rect.topleft=self.button_for_locked_11.rect.topright
+		self.button_for_locked_13.rect.topleft=self.button_for_locked_12.rect.topright
+		self.button_for_locked_14.rect.topleft=self.button_for_locked_13.rect.topright
+		self.button_for_locked_15.rect.topleft=self.button_for_locked_14.rect.topright
+		self.button_for_locked_16.rect.topleft=self.button_for_locked_11.rect.bottomleft
+		self.button_for_locked_17.rect.topleft=self.button_for_locked_16.rect.topright
+		self.button_for_locked_18.rect.topleft=self.button_for_locked_17.rect.topright
+		self.button_for_locked_19.rect.topleft=self.button_for_locked_18.rect.topright
+		self.buttons_for_selection=[self.button_for_1,self.button_for_2,self.button_for_3,self.button_for_4,self.button_for_5,self.button_for_6,self.button_for_7,self.button_for_8,self.button_for_9,self.button_for_10,self.button_for_11,self.button_for_12,self.button_for_13,self.button_for_14,self.button_for_15,self.button_for_16,self.button_for_17,self.button_for_18,self.button_for_19,self.button_for_locked_1,self.button_for_locked_2,self.button_for_locked_3,self.button_for_locked_4,self.button_for_locked_5,self.button_for_locked_6,self.button_for_locked_7,self.button_for_locked_8,self.button_for_locked_9,self.button_for_locked_10,self.button_for_locked_11,self.button_for_locked_12,self.button_for_locked_13,self.button_for_locked_14,self.button_for_locked_15,self.button_for_locked_16,self.button_for_locked_17,self.button_for_locked_18,self.button_for_locked_19,]
 		self.select_button=button.Button2(self,"请选择关卡")
 		self.select_button.rect.center=self.screen_rect.center
 		self.select_button.rect.bottom=self.button_for_1.rect.top
 		try:
-			with open('data/level.json') as f:
+			with open('C:/ProgramData/learn_typing/data/level.json') as f:
 				self.level_now=int(f.read())
 		except:
-			self.level_now=1
+			self.level_now=1 
 		self.answer=''
 	
 	def generate_level_string(self,level):
@@ -95,9 +134,9 @@ class LearnTyping:
 			for i in range(1,level+1):
 				data1.extend(self.level_data[f"level_{i}"]['new_key'])
 			k=""
-			for i in range(50):
+			for i in range(40):
 				k+=random.choice(data['new_key'])
-			for i in range(20):
+			for i in range(10):
 				k+=random.choice(data1)
 			return k
 		elif data['type'] == 'review':
@@ -105,7 +144,7 @@ class LearnTyping:
 			for i in range(1,level):
 				data1.extend(self.level_data[f"level_{i}"]['new_key'])
 			k=""
-			for i in range(50):
+			for i in range(100):
 				k+=random.choice(data1)
 			return k
 		else:
@@ -113,7 +152,7 @@ class LearnTyping:
 			for i in range(1,level):
 				data1.extend(self.level_data[f"level_{i}"]['new_key'])
 			k=""
-			for i in range(10):
+			for i in range(20):
 				k+=random.choice(data1)
 			return k
 
@@ -121,7 +160,7 @@ class LearnTyping:
 	def _check_event(self):
 		for event in pygame.event.get():
 			if event.type==pygame.QUIT:
-				with open('data/level.json','w') as f:
+				with open('C:/ProgramData/learn_typing/data/level.json','w') as f:
 					f.write(f'{self.level_now}')
 				sys.exit()
 			elif event.type==pygame.MOUSEBUTTONDOWN:
@@ -184,7 +223,7 @@ class LearnTyping:
 						while stay_in:
 							for event in pygame.event.get():
 								if event.type==pygame.QUIT:
-									with open('data/level.json','w') as f:
+									with open('C:/ProgramData/learn_typing/data/level.json','w') as f:
 										f.write(f'{self.level_now}')
 										sys.exit()
 								elif event.type==pygame.MOUSEBUTTONDOWN:
@@ -194,7 +233,7 @@ class LearnTyping:
 									stay_in=False
 								if event.type==pygame.KEYDOWN:
 									if event.key==pygame.K_ESCAPE:
-										with open('data/level.json','w') as f:
+										with open('C:/ProgramData/learn_typing/data/level.json','w') as f:
 											f.write(f'{self.level_now}')
 											sys.exit()
 							self.screen.fill(self.bg_color)
@@ -222,6 +261,8 @@ class LearnTyping:
 							self.health=self.level_data[f"level_{self.answer}"]['health']
 						self.time_typed=time.time()
 						self.start_time=time.time()
+						self.typed=0
+						self.plus_time=0
 						self.game_mode='play'
 					else:
 						self.screen.fill(self.bg_color)
@@ -237,7 +278,7 @@ class LearnTyping:
 				
 			if event.type==pygame.KEYDOWN:
 				if event.key==pygame.K_ESCAPE:
-					with open('data/level.json','w') as f:
+					with open('C:/ProgramData/learn_typing/data/level.json','w') as f:
 						f.write(f'{self.level_now}')
 					sys.exit()
 						
@@ -245,15 +286,15 @@ class LearnTyping:
 					if self.type=='endless':
 						self.time_typed=time.time()
 					try:
-						if chr(int(str(event.key)))==self.str[0]:
+						if chr(int(event.key))==self.str[0]:
 							self.music.play_effect(1)
 							self.str=self.str[1:]
-							self.right.append(chr(int(str(event.key))))
-							self.all.remove(chr(int(str(event.key))))
+							self.right.append(chr(int(event.key)))
+							self.all.remove(chr(int(event.key)))
 							self.typed+=1
-							if self.all==[]:
+							if len(self.right)>=2:
 								self.all=list(self.str)[:10]
-								self.right=[]
+								self.right=list(self.right[1])
 						else:
 							self.music.play_effect(3)
 							if self.type != 'endless':
@@ -288,8 +329,8 @@ class LearnTyping:
 							b.draw_button()
 							pygame.display.flip()
 							time.sleep(3)
-						if self.str=='' and self.type=='endless':
-							self.str=self.generate_level_string(int(self.answer))
+						if len(self.str)<=10 and self.type=='endless':
+							self.str+=self.generate_level_string(int(self.answer))
 							self.all=list(self.str)[:10]
 					except:
 						if event.key:
@@ -314,7 +355,7 @@ class LearnTyping:
 
 	def _check_quit_button(self,mouse_pos):
 		if self.quit_button.rect.collidepoint(mouse_pos):
-			with open('data/level.json','w') as f:
+			with open('C:/ProgramData/learn_typing/data/level.json','w') as f:
 				f.write(f'{self.level_now}')
 			sys.exit()
 
@@ -341,7 +382,7 @@ class LearnTyping:
 			while stay_in:
 				for event in pygame.event.get():
 					if event.type==pygame.QUIT:
-						with open('data/level.json','w') as f:
+						with open('C:/ProgramData/learn_typing/data/level.json','w') as f:
 							f.write(f'{self.level_now}')
 							sys.exit()
 					elif event.type==pygame.MOUSEBUTTONDOWN:
@@ -367,25 +408,10 @@ class LearnTyping:
 		if self.game_mode=='select':
 			self.select_button.msg=f"请选择关卡，您目前达到了{self.level_now}关"
 			self.select_button.draw_button()
-			self.button_for_1.draw_button()
-			self.button_for_2.draw_button()
-			self.button_for_3.draw_button()
-			self.button_for_4.draw_button()
-			self.button_for_5.draw_button()
-			self.button_for_6.draw_button()
-			self.button_for_7.draw_button()
-			self.button_for_8.draw_button()
-			self.button_for_9.draw_button()
-			self.button_for_10.draw_button()
-			self.button_for_11.draw_button()
-			self.button_for_12.draw_button()
-			self.button_for_13.draw_button()
-			self.button_for_14.draw_button()
-			self.button_for_15.draw_button()
-			self.button_for_16.draw_button()
-			self.button_for_17.draw_button()
-			self.button_for_18.draw_button()
-			self.button_for_19.draw_button()
+			for i in range(0,self.level_now):
+				self.buttons_for_selection[i].draw_button()
+			for i in range(self.level_now,19):
+				self.buttons_for_selection[19+i].draw_button()
 		if self.game_mode=='play':
 			self.playing_button=button.Button1(self,'    '.join(self.right))
 			self.playing_button.rect.center=self.screen_rect.center

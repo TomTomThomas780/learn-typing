@@ -12,7 +12,7 @@ class Heart(Sprite):
         self.screen_rect = ai_game.screen.get_rect()
 
         # Load the ship image and get its rect.
-        self.image = pygame.image.load('images/heart.bmp')
+        self.image = pygame.image.load('C:/ProgramData/learn_typing/images/heart.bmp')
         self.rect = self.image.get_rect()
 
     def blitme(self):
